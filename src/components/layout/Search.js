@@ -24,19 +24,20 @@ const Search = ({ searchCharacters, clearUsers }) => {
                     onChange={onChange}
                     style={{ flexGrow: 1 }}
                 />
+                {showClear && <button className="btn btn-primary btn-lg" style={{ margin: "auto 10px" }} onClick={() => {
+                    clearUsers()
+                    setText('')
+                    setShowClear(false)
+                }}>Clear </button>}
                 <input
                     type="submit"
                     value="Search Characters"
                     className="btn btn-dark"
-                    style={{ marginLeft: "10px" }}
+                    style={{ margin: "auto 10px" }}
                 />
             </form>
 
-            {showClear && <button className="btn btn-light btn-block m-3" onClick={() => {
-                clearUsers()
-                setText('')
-                setShowClear(false)
-            }}>Back to Characters</button>}
+
         </div>
     )
 

@@ -8,35 +8,28 @@ import Search from './components/layout/Search';
 
 import './App.css';
 import Pagination from './components/layout/Pagination';
-import { Chip, createStyles, makeStyles } from '@material-ui/core';
+import { Chip } from '@material-ui/core';
 
 const App = () => {
   const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [charPerPage] = useState(10)
   const [filter, setFilter] = useState('All')
   const [filteredUsers, setFilteredUsers] = useState([])
 
   const getCharacters = async () => {
-    setLoading(true)
     const res = await axios.get(`https://www.breakingbadapi.com/api/characters`)
 
-    const data = await res.data
 
     setUsers(res.data);
     setFilteredUsers(res.data)
-    setLoading(false)
   };
 
   const searchCharacters = async (text) => {
-    setLoading(true)
     const res = await axios.get(`https://www.breakingbadapi.com/api/characters?name=${text}`)
 
-    const data = await res.data.items
 
     setFilteredUsers(res.data)
-    setLoading(false)
   };
   const clearUsers = () => {
     setFilteredUsers(users)
@@ -48,12 +41,11 @@ const App = () => {
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   useEffect(() => {
-    console.log(filter, users)
     if (filter === "All") setFilteredUsers(users)
     else setFilteredUsers(users.filter((user) => {
       return user.category.split(", ").includes(filter)
     }))
-  }, [filter])
+  }, [filter, users])
 
   useEffect(() => {
     getCharacters();
