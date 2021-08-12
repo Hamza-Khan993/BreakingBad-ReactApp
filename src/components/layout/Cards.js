@@ -106,7 +106,7 @@ export default function Cards(props) {
                 <Typography className="my-1 " variant="body2" color="textPrimary" component="p">
                     <strong>Status:</strong> {props.status}
                 </Typography>
-                <Typography className="text-center m-1" variant="body2" color="textPrimary" component="div">
+                <Typography className="text-center" variant="body2" color="textPrimary" component="div">
                     <strong>Seasons Appeared:</strong>
                     <ul className={`my-2 ${classes.cardDiv}`}>
                         {props.appearance.map((season, index) => (

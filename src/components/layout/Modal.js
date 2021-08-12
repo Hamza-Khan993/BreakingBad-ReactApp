@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) =>
             border: '2px solid #000',
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
+            marginTop: "80px"
         },
     }),
 );
@@ -51,6 +52,7 @@ export default function TransitionsModal({ charQuotes, charName }) {
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
+                        <button onClick={handleClose} className="btn btn-dark m-4"> Back To Characters</button>
                         <h2 id="transition-modal-title">{`Quotes by ${charName}`}</h2>
                         <p id="transition-modal-description">{charQuotes}</p>
                     </div>
