@@ -1,22 +1,19 @@
 import React, { useEffect } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import FormatQuoteIcon from '@material-ui/icons/FormatQuote'
 import axios from 'axios'
+import TransitionsModal from './Modal';
+// import { Modal } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
             maxWidth: 345,
+            margingTop: "20px"
         },
         media: {
             // height : "50%",
@@ -45,6 +42,10 @@ const useStyles = makeStyles((theme) =>
             right: "0",
             marginLeft: "40px",
             alignSelf: "center"
+        },
+        charImage: {
+            height: "400px",
+            borderRadius: "50%"
         }
     }),
 );
@@ -60,12 +61,9 @@ const seasonStyle = {
 
 export default function Cards(props) {
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
     const [quotes, setQuotes] = React.useState([])
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
+
 
     const getQuotes = async () => {
         const URLParams = new URLSearchParams();
@@ -79,6 +77,7 @@ export default function Cards(props) {
     }
 
     useEffect(() => {
+        // console.log()
         getQuotes();
         //eslint-disable-next-line
     }, [])
@@ -90,25 +89,26 @@ export default function Cards(props) {
                 subheader={`DOB: ${props.birthday}`}
             />
             <div>
-                <CardMedia className={classes.media} image={props.img} />
+                {/* <CardMedia className={classes.media} image={props.img} /> */}
+                <img className={classes.charImage} src={props.img} alt="CharacterImage" />
 
             </div>
             <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography className="m-1" variant="body2" color="textSecondary" component="p">
                     <strong>Actor:</strong> {props.portrayed}
                 </Typography>
-                <Typography variant="body2" color="textPrimary" component="p">
+                <Typography className="m-1" variant="body2" color="textPrimary" component="p">
                     <strong>Nickname:</strong>  {props.nickname}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography style={{ height: "45px" }} className="p-1" variant="body2" color="textSecondary" component="p">
                     <strong>Occupations:</strong>  {props.occupation}
                 </Typography>
-                <Typography variant="body2" color="textPrimary" component="p">
+                <Typography className="my-1 " variant="body2" color="textPrimary" component="p">
                     <strong>Status:</strong> {props.status}
                 </Typography>
-                <Typography className="text-center" variant="body2" color="textPrimary" component="div">
+                <Typography className="text-center m-1" variant="body2" color="textPrimary" component="div">
                     <strong>Seasons Appeared:</strong>
-                    <ul className={classes.cardDiv}>
+                    <ul className={`my-2 ${classes.cardDiv}`}>
                         {props.appearance.map((season, index) => (
                             <li key={index} style={seasonStyle}>{season}</li>
                         ))}
@@ -116,8 +116,23 @@ export default function Cards(props) {
                 </Typography>
 
             </CardContent>
+            <TransitionsModal
+                charName={props.name}
+                charQuotes=
+                {quotes.length > 0 ? quotes.map((quote) => {
+                    return (
+                        <Typography paragraph key={quote.id}>
+                            {quote.quote}
+                        </Typography>
+                    )
+                }) : (
+                    <Typography paragraph>
+                        No Quotes
+                    </Typography>
+                )}
+            />
 
-            <CardActions disableSpacing>
+            {/* <CardActions disableSpacing>
                 <IconButton aria-label="see Quotes">
                     <FormatQuoteIcon />
                 </IconButton>
@@ -131,10 +146,10 @@ export default function Cards(props) {
                 >
                     <ExpandMoreIcon />
                 </IconButton>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+            </CardActions> */}
+            {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    {quotes.length > 0 ? quotes.map((quote) => {
+                    {/* {quotes.length > 0 ? quotes.map((quote) => {
                         return (
                             <Typography paragraph key={quote.id}>
                                 {quote.quote}
@@ -144,9 +159,9 @@ export default function Cards(props) {
                         <Typography paragraph>
                             No Quotes
                         </Typography>
-                    )}
-                </CardContent>
-            </Collapse>
+                    )} */}
+            {/* </CardContent> */}
+            {/* // </Collapse> */}
         </Card>
     );
 }
